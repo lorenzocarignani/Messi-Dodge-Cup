@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Archivos/Mundo.gd" type="Script" id=1]
+[ext_resource path="res://Archivos/copas.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sprites/CANCHA.png" type="Texture" id=3]
+[ext_resource path="res://Archivos/MESSI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Archivos/Interfaz.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 599.605, 1.09586, 0, 0, 0, 0, 599.647, 799.835, 0, 0, 0, 0, -0.216812, 800.349, 0, 0, 0, 0, -0.730148, 0.557327 )
+}
+
+[node name="Mundo" type="Node"]
+script = ExtResource( 1 )
+Copas = ExtResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_top = 1.0
+margin_right = 600.0
+margin_bottom = 801.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MESSI" parent="." instance=ExtResource( 4 )]
+position = Vector2( 298, 407 )
+velocidad = 250
+
+[node name="CopaTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="InicioTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="posicionDeInicio" type="Position2D" parent="."]
+position = Vector2( 295, 410 )
+
+[node name="camino" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="CopaPosicion" type="PathFollow2D" parent="camino"]
+position = Vector2( 599.605, 1.09586 )
+rotation = 1.57073
+
+[node name="Interfaz" parent="." instance=ExtResource( 5 )]
+
+[connection signal="golpe" from="MESSI" to="." method="game_over"]
+[connection signal="timeout" from="CopaTimer" to="." method="_on_CopaTimer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="InicioTimer" to="." method="_on_InicioTimer_timeout"]
+[connection signal="inicar_juego" from="Interfaz" to="." method="nuevo_juego"]

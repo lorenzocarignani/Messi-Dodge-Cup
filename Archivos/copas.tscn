@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://copas.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/COPA DO AMERICA.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/COPA DO MUNDO.png" type="Texture" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "AMERICA",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "MUNDO",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 14.2699
+height = 35.4605
+
+[node name="copas" type="RigidBody2D"]
+position = Vector2( 413, 516 )
+collision_layer = 0
+gravity_scale = 0.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+Vmax = 150
+Vmin = 100
+
+[node name="SpriteCopa" type="AnimatedSprite" parent="."]
+position = Vector2( -7.40234, -33.3111 )
+scale = Vector2( 0.15, 0.15 )
+frames = SubResource( 1 )
+animation = "AMERICA"
+
+[node name="ColisionCopa" type="CollisionShape2D" parent="."]
+position = Vector2( -5.59586, -25.634 )
+shape = SubResource( 2 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -488.357, -271.52 )
+scale = Vector2( 0.835653, 1.05205 )
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

@@ -1,0 +1,67 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Archivos/MESSI.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/MESSI DE LADO.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/MESSI DE LADO 2.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/MESSI DE LADO 3.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/MESSI ARRIBA.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/MESSI ARRIBA 1.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/MESSI ARRIBA 2.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/MESSI PARA ABAJO.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/MESSI PARA ABAJO 2.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/MESSI PARA BAJO 3.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/MESSI.png" type="Texture" id=11]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "ABAJO",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "FRENTE",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "LADO",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "ARRIBA",
+"speed": 10.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 29.2581
+height = 113.759
+
+[node name="MESSI" type="Area2D"]
+position = Vector2( 197.637, 202.77 )
+scale = Vector2( 0.7, 0.7 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+velocidad = 200
+enfriamiento = 1.5
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.2, 0.2 )
+frames = SubResource( 1 )
+animation = "FRENTE"
+playing = true
+
+[node name="Colision" type="CollisionShape2D" parent="."]
+position = Vector2( 4.10675, 2.05338 )
+scale = Vector2( 0.7, 0.7 )
+shape = SubResource( 2 )
+
+[node name="Sprint" type="Timer" parent="."]
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_MESSI_body_entered"]
+[connection signal="timeout" from="Sprint" to="." method="_on_Sprint_timeout"]
